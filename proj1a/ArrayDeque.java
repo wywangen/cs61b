@@ -1,5 +1,3 @@
-
-
 public class ArrayDeque<T> {
     private T[] item;
     private int size;
@@ -26,35 +24,37 @@ public class ArrayDeque<T> {
 
 
     public void addFirst(T x) {
-        size += 1;
-        if (size > item.length) {
-            resizing(2 * size);
-        }
-        first = (first - 1);
-        if (first < 0) {
-            first = first + item.length;
+        if (size+1 > item.length) {
+            resizing(2 * size+2);
+            first = item.length - 1;
+        } 
+        else {
+            first = first - 1;
+            if (first < 0) {
+                first = first + item.length;
+            }
         }
         item[first] = x;
+        size+=1;
     }
 
 
     public void addLast(T x) {
-        size += 1;
-        if (size > item.length) {
-            resizing(2 * size);
+
+        if (size+1 > item.length) {
+            resizing(2 * size+2);
+            last = size;
         }
-        last = (last + 1) % (item.length);
-        if (last > item.length - 1) {
-            last = last - item.length;
+        else {
+            last = (last + 1) % item.length;
         }
         item[last] = x;
+        size += 1;
     }
 
 
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else return false;
+        return (size == 0);
     }
 
     public int size() {
@@ -70,42 +70,49 @@ public class ArrayDeque<T> {
 
 
     public T removeFirst() {
-        if (size == 0) return null;
-        else {
+        if (size == 0) {
+            return null;
+        } else {
             T x = item[first];
             size = size - 1;
             first = (first + 1) % item.length;
-            if ((double) size < (double) item.length / 4) {
+            while ((double) size < (double) item.length / 4) {
                 resizing(item.length / 2);
-                first = 0;
-                last = size - 1;
             }
+            first = 0;
+            last = size - 1;
             return x;
         }
     }
 
 
     public T removeLast() {
-        if (size == 0) return null;
-        else {
+        if (size == 0) {
+            return null;
+        } else {
             T x = item[last];
             size = size - 1;
             last = last - 1;
             if (last < 0) {
                 last = last + item.length;
             }
-            if ((double) size < (double) item.length / 4) {
+            while ((double) size < (double) item.length / 4) {
                 resizing(item.length / 2);
-                first = 0;
-                last = size - 1;
+
             }
+            first = 0;
+            last = size - 1;
             return x;
         }
     }
 
 
     public T get(int index) {
-        return item[(first + index) % item.length];
+        if (index > size - 1) {
+            return null;
+        } else {
+            return item[(first + index) % item.length];
+        }
     }
 
 
