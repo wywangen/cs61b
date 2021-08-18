@@ -2,9 +2,9 @@ public class LinkedListDeque<T> {
 
 
     private class IntNode {
-        public IntNode prev;
-        public T item;
-        public IntNode next;
+         IntNode prev;
+         T item;
+         IntNode next;
 
         public IntNode(IntNode a, T b, IntNode c) {
             this.prev = a;
@@ -22,16 +22,6 @@ public class LinkedListDeque<T> {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
-    }
-
-    //构造方法2
-    public LinkedListDeque(T x) {
-        size = 1;
-        IntNode p = new IntNode(null, x, null);
-        sentinel = new IntNode(p, null, p);
-        p.prev = sentinel;
-        p.next = sentinel;
-
     }
 
 
@@ -53,11 +43,7 @@ public class LinkedListDeque<T> {
 
     //检查队列是否为空
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (size==0);
     }
 
     //返回队列的结点个数
@@ -118,10 +104,10 @@ public class LinkedListDeque<T> {
 */
 
 
-    private T get_itration(IntNode p, int index) {
+    private T get_iteration(IntNode p, int index) {
         if (index == 0) {
             return p.item;
-        } else return get_itration(p.next, index - 1);
+        } else {return get_iteration(p.next, index - 1);}
 
 
     }
@@ -129,7 +115,7 @@ public class LinkedListDeque<T> {
     public T get(int index) {
         if (index > size - 1) {
             return null;
-        } else return get_itration(sentinel.next, index);
+        } else {return get_iteration(sentinel.next, index);}
     }
 
 
@@ -150,3 +136,4 @@ public class LinkedListDeque<T> {
 
 
 }
+
